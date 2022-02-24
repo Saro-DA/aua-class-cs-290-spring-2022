@@ -1,5 +1,6 @@
 const NotFoundError = require('../common/errors/not-found.error')
 const students = ['Arshak', 'Lilit', 'Alex', 'Saro'];
+const { square } = require('../common/helpers/math.helper');
 
 module.exports = {
     removeStudent(index) {
@@ -20,6 +21,7 @@ module.exports = {
     },
 
     async getOneStudent(index) {
+        square(2);
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         const student = students[index]
