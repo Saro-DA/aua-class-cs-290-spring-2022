@@ -1,48 +1,31 @@
 const express = require('express');
-const NotFoundError = require('../common/errors/NotFoundError');
+const asyncHandler = require('express-async-handler');
 
 const studentsService = require('./students.service');
 
 const route = express.Router();
 
-
-
 route.delete('/:id/', (req, res) => {
     const index = req.params['id'];
-
-    const student = students[index]
-
-    if (student === undefined) {
-        res.send(404, `Resource with id = ${index} is not found!`);
-        return;
-    }
-
-    students.splice(index, 1);
-
-    res.send(student);
+    const removedStudent = studentsService.removeStudent(index);
+    res.send(removedStudent);
 })
 
 route.post('/', (req, res) => {
-    const studentData = req.body;
-    students.push(studentData.name);
-    res.send(201, studentData);
+    const newStudent = studentsService.createStudent(req.body);
+    res.status(201).send(newStudent);
 })
 
-route.get('/:id/', async (req, res) => {
+route.get('/:id/', asyncHandler(async (req, res) => {
     const index = req.params['id'];
 
-    try {
-        const result = await studentsService.getOneStudent(index);
-        res.send(result);
-    } catch (err) {
-        if (err instanceof NotFoundError) {
-            res.send(404, err.message);
-        }
-    }
-})
+    const result = await studentsService.getOneStudent(index);
+    res.send(result);
+}))
 
 route.get('/', (req, res) => {
-    res.send(students);
+    const result = studentsService.getAllStudents();
+    res.send(result);
 })
 
 module.exports = route;

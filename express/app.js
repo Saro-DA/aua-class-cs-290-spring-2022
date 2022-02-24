@@ -1,3 +1,4 @@
+const errorHandler = require('./common/middlewares/error-handler.middleware');
 const studentController = require('./students/students.controller');
 const express = require('express');
 const app = express();
@@ -13,3 +14,6 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
     console.log('Server is running! 🚀');
 })
+
+// Error handler must be the last added middleware.
+app.use(errorHandler);

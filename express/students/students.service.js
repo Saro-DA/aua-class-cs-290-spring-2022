@@ -1,7 +1,20 @@
-const NotFoundError = require('../common/errors/NotFoundError')
+const NotFoundError = require('../common/errors/not-found.error')
 const students = ['Arshak', 'Lilit', 'Alex', 'Saro'];
 
 module.exports = {
+    removeStudent(index) {
+        const student = this.getOneStudent(index);
+
+        students.splice(index, 1);
+
+        return student;
+    },
+
+    createStudent(data) {
+        students.push(data.name);
+        return data;
+    },
+
     getAllStudents() {
         return students;
     },
