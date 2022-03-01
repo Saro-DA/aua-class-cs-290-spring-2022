@@ -16,9 +16,8 @@ route.post('/', (req, res) => {
     res.status(201).send(newStudent);
 })
 
-route.get('/:id/', asyncHandler(async (req, res) => {
+route.get('/:id/', asyncHandler(async (req, res, next) => {
     const index = req.params['id'];
-
     const result = await studentsService.getOneStudent(index);
     res.send(result);
 }))
