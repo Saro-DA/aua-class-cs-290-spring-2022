@@ -26,8 +26,8 @@ describe("Testing math.helper file.", function () {
             sqrt(4).should.be.equal(2);
         })
 
-        it.skip("Returns and error for a negative number.", function () {
-            expect(sqrt(-4)).to.throw("Can't accept negatvie numbers.");
+        it("Returns and error for a negative number.", function () {
+            (() => sqrt(-4)).should.throw("Can't accept negatvie numbers.");
         })
     })
 })
