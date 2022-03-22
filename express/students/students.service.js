@@ -1,6 +1,7 @@
 const NotFoundError = require('../common/errors/not-found.error')
 const students = ['Arshak', 'Lilit', 'Alex', 'Saro'];
 const { square } = require('../common/helpers/math.helper');
+const Student = require('./entities/student.enitity');
 
 module.exports = {
     removeStudent(index) {
@@ -12,12 +13,12 @@ module.exports = {
     },
 
     createStudent(data) {
-        students.push(data.name);
-        return data;
+        const student = new Student(data);
+        return student.save();
     },
 
     getAllStudents() {
-        return students;
+        return Student.find({}, { __v: false });
     },
 
     async getOneStudent(index) {

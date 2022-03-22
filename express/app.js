@@ -5,6 +5,7 @@ const { square } = require('./common/helpers/math.helper');
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
 dotenv.config();
 
@@ -19,9 +20,16 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.listen(3000, () => {
-    console.log('Server is running! 🚀');
-})
+async function bootstrap() {
+    await mongoose.connect('mongodb://localhost:27017/people');
+    console.log('DB connected successfully.');
+    app.listen(3000, () => {
+        console.log('Server is running! 🚀');
+    })
+}
+
+bootstrap().catch(err => console.log(err));
+
 
 // Error handler must be the last added middleware.
 app.use((req, res, next) => {

@@ -11,10 +11,10 @@ route.delete('/:id/', (req, res) => {
     res.send(removedStudent);
 })
 
-route.post('/', (req, res) => {
-    const newStudent = studentsService.createStudent(req.body);
+route.post('/', asyncHandler(async (req, res) => {
+    const newStudent = await studentsService.createStudent(req.body);
     res.status(201).send(newStudent);
-})
+}))
 
 route.get('/:id/', asyncHandler(async (req, res, next) => {
     const index = req.params['id'];
@@ -22,9 +22,9 @@ route.get('/:id/', asyncHandler(async (req, res, next) => {
     res.send(result);
 }))
 
-route.get('/', (req, res) => {
-    const result = studentsService.getAllStudents();
+route.get('/', asyncHandler(async (req, res) => {
+    const result = await studentsService.getAllStudents();
     res.send(result);
-})
+}))
 
 module.exports = route;
