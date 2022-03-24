@@ -5,11 +5,11 @@ const studentsService = require('./students.service');
 
 const route = express.Router();
 
-route.delete('/:id/', (req, res) => {
-    const index = req.params['id'];
-    const removedStudent = studentsService.removeStudent(index);
+route.delete('/:id/', asyncHandler(async (req, res) => {
+    const id = req.params['id'];
+    const removedStudent = await studentsService.removeStudent(id);
     res.send(removedStudent);
-})
+}))
 
 route.post('/', asyncHandler(async (req, res) => {
     const newStudent = await studentsService.createStudent(req.body);
@@ -24,6 +24,11 @@ route.get('/:id/', asyncHandler(async (req, res, next) => {
 
 route.get('/', asyncHandler(async (req, res) => {
     const result = await studentsService.getAllStudents();
+    res.send(result);
+}))
+
+route.patch('/:id', asyncHandler(async (req, res) => {
+    const result = await studentsService.updateStudent(req.params['id'], req.body);
     res.send(result);
 }))
 

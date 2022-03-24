@@ -1,15 +1,11 @@
 const NotFoundError = require('../common/errors/not-found.error')
-const students = ['Arshak', 'Lilit', 'Alex', 'Saro'];
-const { square } = require('../common/helpers/math.helper');
 const Student = require('./entities/student.enitity');
 
 module.exports = {
-    removeStudent(index) {
-        const student = this.getOneStudent(index);
+    async removeStudent(index) {
+        const student = await this.getOneStudent(index);
 
-        students.splice(index, 1);
-
-        return student;
+        return student.remove();
     },
 
     createStudent(data) {
@@ -18,19 +14,22 @@ module.exports = {
     },
 
     getAllStudents() {
-        return Student.find({}, { __v: false });
+        return Student.find({}, { __v: false }).exec();
     },
 
-    async getOneStudent(index) {
-        square(2);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+    async getOneStudent(id) {
+        const student = await Student.findById(id);
 
-        const student = students[index]
-
-        if (student === undefined) {
-            throw new NotFoundError(`Student with id = ${index} is not found!`);
+        if (!student) {
+            throw new NotFoundError(`Student with id = ${id} is not found!`);
         }
 
         return student;
+    },
+
+    async updateStudent(id, toUpdate) {
+        const student = await this.getOneStudent(id);
+        student.set(toUpdate);
+        return student.save();
     }
 }
