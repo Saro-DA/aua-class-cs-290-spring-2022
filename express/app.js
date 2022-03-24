@@ -1,3 +1,4 @@
+const asyncHandler = require('express-async-handler');
 const errorHandler = require('./common/middlewares/error-handler.middleware');
 const apiKeyMiddleware = require('./common/middlewares/api-key.middleware');
 const studentController = require('./students/students.controller');
@@ -6,6 +7,7 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const studentsService = require('./students/students.service');
 
 dotenv.config();
 
@@ -19,6 +21,11 @@ app.get('/', (req, res) => {
     square(4);
     res.send('Hello World!')
 })
+
+app.post('/login', asyncHandler(async (req, res) => {
+    const result = await studentsService.login(req.body.email, req.body.password);
+    res.status(200).send(result);
+}))
 
 async function bootstrap() {
     await mongoose.connect('mongodb://localhost:27017/people');
