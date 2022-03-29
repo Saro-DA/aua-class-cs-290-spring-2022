@@ -2,6 +2,7 @@ const NotFoundError = require('../common/errors/not-found.error');
 const UnauthorizedError = require('../common/errors/unauthorized.error');
 const Student = require('./entities/student.enitity');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     async removeStudent(index) {
@@ -16,7 +17,7 @@ module.exports = {
     },
 
     getAllStudents() {
-        return Student.find({}, { __v: false }).exec();
+        return Student.find({}, { __v: false, password: false }).exec();
     },
 
     async getOneStudent(id) {
@@ -38,7 +39,7 @@ module.exports = {
     async login(email, password) {
         const message = 'Either email or password is wrong.';
 
-        const student = await Student.findOne({ email });
+        const student = await Student.findOne({ email }, { __v: false }).exec();
         if (!student) {
             throw new UnauthorizedError(message);
         }
@@ -48,6 +49,11 @@ module.exports = {
             throw new UnauthorizedError(message);
         }
 
-        return student;
+        return jwt.sign({
+            _id: student._id,
+            firstName: student.firstName,
+            lastName: student.lastName,
+            email: student.email
+        }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
     }
 }

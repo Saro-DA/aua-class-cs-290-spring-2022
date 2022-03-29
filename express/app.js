@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const errorHandler = require('./common/middlewares/error-handler.middleware');
 const apiKeyMiddleware = require('./common/middlewares/api-key.middleware');
+const authMiddleware = require('./common/middlewares/authorization.middleware');
 const studentController = require('./students/students.controller');
 const { square } = require('./common/helpers/math.helper');
 const express = require('express');
@@ -13,7 +14,8 @@ dotenv.config();
 
 app.use(express.json());
 
-app.use(apiKeyMiddleware);
+// app.use(apiKeyMiddleware);
+app.use(asyncHandler(authMiddleware));
 
 app.use('/students', studentController);
 
