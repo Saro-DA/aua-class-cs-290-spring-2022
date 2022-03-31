@@ -10,6 +10,12 @@ function List() {
   };
 
   const handleAdd = () => {
+    /*
+      These kind of updates including the previous state are not a good practice,
+      as you are not guaranteed that the state is the correct previous state
+      at that point of time. Instead it can be done the following way:
+      setList(prev => ([...prev, inputValue]));
+    */
     setList([...list, inputValue]);
     setInputValue("");
   };
