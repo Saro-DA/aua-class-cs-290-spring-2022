@@ -1,0 +1,21 @@
+.list {
+  margin-top: 30px;
+}
+
+.list input {
+  padding: 8px;
+}
+
+.list-input {
+  margin-right: 12px;
+}
+
+.list-item {
+  max-width: 300px;
+  margin-right: auto;
+  margin-left: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 8px;
+}

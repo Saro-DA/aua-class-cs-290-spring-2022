@@ -1,9 +1,11 @@
 import { useState, memo } from "react";
+import Button from "./Button";
+import "./List.css";
 
 function List() {
   const [inputValue, setInputValue] = useState("");
   const [list, setList] = useState([]);
-  console.log("inside list");
+  console.log("list rerendered");
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -16,23 +18,28 @@ function List() {
       at that point of time. Instead it can be done the following way:
       setList(prev => ([...prev, inputValue]));
     */
-    setList([...list, inputValue]);
+    setList((prev) => [...prev, inputValue]);
     setInputValue("");
   };
 
   return (
-    <div>
+    <div className="list">
       <input
         placeholder="Type here..."
         onChange={handleChange}
         value={inputValue}
+        className="list-input"
       />
-      <button onClick={handleAdd} className="button--inc">
-        Add
-      </button>
+      <Button onClick={handleAdd} type={"secondary"}>
+        Add to the list
+      </Button>
       <div>
         {list.map((item, index) => {
-          return <div key={index}>{item}</div>;
+          return (
+            <div className={"list-item"} key={index}>
+              {item}
+            </div>
+          );
         })}
       </div>
     </div>

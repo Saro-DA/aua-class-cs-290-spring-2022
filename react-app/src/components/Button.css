@@ -1,0 +1,21 @@
+.custom-button {
+  padding: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.custom-button--primary {
+  background-color: darkolivegreen;
+  color: white;
+}
+
+.custom-button--secondary {
+  background-color: #eee;
+  color: black;
+}
+
+.custom-button--error {
+  background-color: red;
+  color: white;
+}

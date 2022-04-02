@@ -7,19 +7,3 @@
   font-size: 30px;
   color: darkgreen;
 }
-
-button {
-  padding: 8px;
-  font-size: 16px;
-  color: #000;
-}
-
-.button--inc {
-  background-color: darkolivegreen;
-  color: white;
-}
-
-.button--dec {
-  background-color: red;
-  color: white;
-}
