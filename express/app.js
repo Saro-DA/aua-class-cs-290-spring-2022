@@ -9,13 +9,16 @@ const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const studentsService = require('./students/students.service');
+const cors = require('cors');
 
 dotenv.config();
 
 app.use(express.json());
 
+app.use(cors());
+
 // app.use(apiKeyMiddleware);
-app.use(asyncHandler(authMiddleware));
+// app.use(asyncHandler(authMiddleware));
 
 app.use('/students', studentController);
 
